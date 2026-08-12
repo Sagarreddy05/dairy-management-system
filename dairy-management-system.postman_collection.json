@@ -1,0 +1,534 @@
+{
+  "info": {
+    "name": "Dairy Management System",
+    "description": "FarmFresh Dairy Farm Management System API collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.data && res.data.token) {",
+                  "  pm.collectionVariables.set('token', res.data.token);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@farmfresh.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Farmers",
+      "item": [
+        {
+          "name": "List Farmers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/farmers?page=1&limit=10&search="
+          }
+        },
+        {
+          "name": "Create Farmer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmerName\": \"New Farmer\",\n  \"mobileNumber\": \"9999900001\",\n  \"village\": \"Anand\",\n  \"address\": \"Farm Road\",\n  \"cattleCount\": 5,\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/farmers"
+          }
+        },
+        {
+          "name": "Get Farmer",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/farmers/:id"
+          }
+        },
+        {
+          "name": "Update Farmer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmerName\": \"Updated Farmer\",\n  \"mobileNumber\": \"9999900001\",\n  \"village\": \"Anand\",\n  \"address\": \"Farm Road\",\n  \"cattleCount\": 6,\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/farmers/:id"
+          }
+        },
+        {
+          "name": "Delete Farmer",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/farmers/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Milk Collections",
+      "item": [
+        {
+          "name": "List Milk Collections",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/milk-collections?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create Milk Collection",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"farmerId\": \"FARMER_ID\",\n  \"collectionDate\": \"2026-08-11\",\n  \"milkType\": \"COW\",\n  \"quantityLiters\": 20,\n  \"fatPercentage\": 3.8,\n  \"ratePerLiter\": 42\n}"
+            },
+            "url": "{{baseUrl}}/milk-collections"
+          }
+        },
+        {
+          "name": "Update Milk Collection",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantityLiters\": 22,\n  \"ratePerLiter\": 43\n}"
+            },
+            "url": "{{baseUrl}}/milk-collections/:id"
+          }
+        },
+        {
+          "name": "Delete Milk Collection",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/milk-collections/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "List Customers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/customers?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"New Customer\",\n  \"mobileNumber\": \"9888800001\",\n  \"address\": \"Street 1\",\n  \"area\": \"Sector 1\",\n  \"customerType\": \"HOME\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/customers"
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerName\": \"Updated Customer\",\n  \"mobileNumber\": \"9888800001\",\n  \"address\": \"Street 1\",\n  \"area\": \"Sector 1\",\n  \"customerType\": \"HOME\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/customers/:id"
+          }
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/customers/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Subscriptions",
+      "item": [
+        {
+          "name": "List Subscriptions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/subscriptions?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"CUSTOMER_ID\",\n  \"milkType\": \"COW\",\n  \"quantityPerDay\": 1,\n  \"deliveryShift\": \"MORNING\",\n  \"startDate\": \"2026-08-01\",\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "url": "{{baseUrl}}/subscriptions"
+          }
+        },
+        {
+          "name": "Update Subscription",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantityPerDay\": 2,\n  \"deliveryShift\": \"EVENING\"\n}"
+            },
+            "url": "{{baseUrl}}/subscriptions/:id"
+          }
+        },
+        {
+          "name": "Delete Subscription",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/subscriptions/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/products?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productName\": \"Butter\",\n  \"sku\": \"BUTTER-001\",\n  \"category\": \"BUTTER\",\n  \"unitPrice\": 480,\n  \"currentStock\": 30,\n  \"minStockAlertQty\": 10\n}"
+            },
+            "url": "{{baseUrl}}/products"
+          }
+        },
+        {
+          "name": "Adjust Stock",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantityChanged\": 10,\n  \"movementType\": \"IN\",\n  \"reason\": \"Purchase\"\n}"
+            },
+            "url": "{{baseUrl}}/products/:id/stock"
+          }
+        },
+        {
+          "name": "Upload Product Image",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "image", "type": "file", "src": [] }
+              ]
+            },
+            "url": "{{baseUrl}}/products/:id/upload"
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/products/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Deliveries",
+      "item": [
+        {
+          "name": "List Deliveries",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/deliveries?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Generate Daily Deliveries",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2026-08-11\"\n}"
+            },
+            "url": "{{baseUrl}}/deliveries/generate"
+          }
+        },
+        {
+          "name": "Create Delivery",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"CUSTOMER_ID\",\n  \"deliveryDate\": \"2026-08-11\",\n  \"deliveryShift\": \"MORNING\",\n  \"productId\": \"PRODUCT_ID\",\n  \"quantity\": 1,\n  \"deliveryStatus\": \"PENDING\"\n}"
+            },
+            "url": "{{baseUrl}}/deliveries"
+          }
+        },
+        {
+          "name": "Update Delivery",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"deliveryStatus\": \"DELIVERED\"\n}"
+            },
+            "url": "{{baseUrl}}/deliveries/:id"
+          }
+        },
+        {
+          "name": "Delete Delivery",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/deliveries/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "List Invoices",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/invoices?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Generate Monthly Invoices",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"billingMonth\": \"2026-08\"\n}"
+            },
+            "url": "{{baseUrl}}/invoices/generate"
+          }
+        },
+        {
+          "name": "Create Invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoiceNumber\": \"INV-202608-099\",\n  \"customerId\": \"CUSTOMER_ID\",\n  \"billingMonth\": \"2026-08\",\n  \"totalAmount\": 1500,\n  \"paidAmount\": 0\n}"
+            },
+            "url": "{{baseUrl}}/invoices"
+          }
+        },
+        {
+          "name": "Delete Invoice",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/invoices/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "List Payments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/payments?page=1&limit=10"
+          }
+        },
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invoiceId\": \"INVOICE_ID\",\n  \"amount\": 500,\n  \"paymentDate\": \"2026-08-11\",\n  \"paymentMethod\": \"UPI\"\n}"
+            },
+            "url": "{{baseUrl}}/payments"
+          }
+        },
+        {
+          "name": "Delete Payment",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/payments/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/dashboard"
+          }
+        },
+        {
+          "name": "Daily Milk Collection",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/daily-milk-collection?date=2026-08-11"
+          }
+        },
+        {
+          "name": "Farmer Payments",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/farmer-payments?from=2026-08-01&to=2026-08-31"
+          }
+        },
+        {
+          "name": "Customer Billing",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/customer-billing?month=2026-08"
+          }
+        },
+        {
+          "name": "Delivery Report",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/deliveries?date=2026-08-11"
+          }
+        },
+        {
+          "name": "Inventory Report CSV",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/reports/inventory?format=csv"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  milkCollections MilkCollection[]
+  stockMovements  StockMovement[]
+  salesChallans   SalesChallan[]
+}
+
+model Farmer {
+  id           String   @id @default(cuid())
+  farmerName   String
+  mobileNumber String
+  village      String
+  address      String
+  cattleCount  Int      @default(0)
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  milkCollections MilkCollection[]
+
+  @@index([farmerName])
+  @@index([mobileNumber])
+}
+
+model MilkCollection {
+  id             String   @id @default(cuid())
+  farmerId       String
+  collectionDate DateTime
+  milkType       String
+  quantityLiters Float
+  fatPercentage  Float
+  ratePerLiter   Float
+  totalAmount    Float
+  collectedBy    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  farmer    Farmer @relation(fields: [farmerId], references: [id])
+  collector User   @relation(fields: [collectedBy], references: [id])
+
+  @@index([collectionDate])
+  @@index([farmerId])
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  customerName String
+  mobileNumber String
+  address      String
+  area         String
+  customerType String
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  subscriptions Subscription[]
+  deliveries    Delivery[]
+  invoices      Invoice[]
+  salesChallans SalesChallan[]
+
+  @@index([customerName])
+  @@index([mobileNumber])
+}
+
+model Subscription {
+  id             String   @id @default(cuid())
+  customerId     String
+  milkType       String
+  quantityPerDay Float
+  deliveryShift  String
+  startDate      DateTime
+  status         String   @default("ACTIVE")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id])
+
+  @@index([customerId])
+  @@index([status])
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  productName      String
+  sku              String   @unique
+  category         String
+  unitPrice        Float
+  currentStock     Float    @default(0)
+  minStockAlertQty Float    @default(10)
+  imagePath        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  stockMovements StockMovement[]
+  deliveries     Delivery[]
+
+  @@index([productName])
+  @@index([category])
+}
+
+model StockMovement {
+  id              String   @id @default(cuid())
+  productId       String
+  quantityChanged Float
+  movementType    String
+  reason          String
+  createdBy       String
+  createdAt       DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id])
+  creator User    @relation(fields: [createdBy], references: [id])
+
+  @@index([productId])
+}
+
+model Delivery {
+  id             String   @id @default(cuid())
+  customerId     String
+  deliveryDate   DateTime
+  deliveryShift  String
+  productId      String
+  quantity       Float
+  deliveryStatus String   @default("PENDING")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  product  Product  @relation(fields: [productId], references: [id])
+
+  @@index([deliveryDate])
+  @@index([customerId])
+  @@index([deliveryStatus])
+}
+
+model Invoice {
+  id            String   @id @default(cuid())
+  invoiceNumber String   @unique
+  customerId    String
+  billingMonth  String
+  totalAmount   Float
+  paidAmount    Float    @default(0)
+  balanceAmount Float
+  paymentStatus String   @default("UNPAID")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  customer Customer  @relation(fields: [customerId], references: [id])
+  payments Payment[]
+
+  @@index([billingMonth])
+  @@index([customerId])
+  @@index([paymentStatus])
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  invoiceId     String
+  amount        Float
+  paymentDate   DateTime
+  paymentMethod String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id])
+
+  @@index([invoiceId])
+  @@index([paymentDate])
+}
+
+model SalesChallan {
+  id            String   @id @default(cuid())
+  challanNumber String   @unique
+  customerId    String
+  totalQuantity Float    @default(0)
+  totalAmount   Float    @default(0)
+  status        String   @default("DRAFT")
+  createdBy     String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  customer Customer          @relation(fields: [customerId], references: [id])
+  creator  User              @relation(fields: [createdBy], references: [id])
+  items    SalesChallanItem[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([challanNumber])
+}
+
+model SalesChallanItem {
+  id          String  @id @default(cuid())
+  challanId   String
+  productId   String?
+  productName String
+  productSku  String
+  productUnit String
+  unitPrice   Float
+  imageUrl    String?
+  quantity    Int
+  lineTotal   Float
+
+  challan SalesChallan @relation(fields: [challanId], references: [id], onDelete: Cascade)
+
+  @@index([challanId])
+  @@index([productId])
+}
