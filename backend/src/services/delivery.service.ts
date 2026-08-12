@@ -135,7 +135,7 @@ export const generateDailyDeliveries = async (dateInput?: string) => {
 
   const created = [];
   for (const sub of subscriptions) {
-    const sku = milkTypeToSku[sub.milkType];
+    const sku = milkTypeToSku[sub.milkType as keyof typeof milkTypeToSku];
     const product = productBySku.get(sku) || products.find((p) => p.category === 'MILK');
     if (!product) continue;
 
