@@ -1,6 +1,9 @@
-FROM node:20-alpine
+FROM node:20-bookworm
 
 WORKDIR /app
+
+# Install OpenSSL for Prisma
+RUN apt-get update && apt-get install -y openssl
 
 COPY package*.json ./
 COPY prisma ./prisma/
