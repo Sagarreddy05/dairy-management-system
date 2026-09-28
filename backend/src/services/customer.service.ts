@@ -73,3 +73,4 @@ export const deleteCustomer = async (id: string) => {
     data: { status: EntityStatus.INACTIVE },
   });
 };
+ 

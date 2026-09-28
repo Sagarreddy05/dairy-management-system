@@ -191,3 +191,4 @@ export const generateMonthlyInvoices = async (billingMonth: string) => {
 
   return { created: created.length, invoices: created };
 };
+ 

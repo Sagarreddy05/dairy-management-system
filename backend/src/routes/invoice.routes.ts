@@ -18,3 +18,4 @@ router.put('/:id', validate(invoiceSchema.partial()), ctrl.update);
 router.delete('/:id', ctrl.remove);
 
 export default router;
+ 

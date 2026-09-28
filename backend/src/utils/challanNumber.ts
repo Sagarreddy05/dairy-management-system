@@ -21,3 +21,4 @@ export const generateChallanNumber = async (): Promise<string> => {
 
   return `${prefix}${String(seq).padStart(4, '0')}`;
 };
+ 

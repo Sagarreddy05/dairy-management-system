@@ -74,3 +74,4 @@ export const dashboard = asyncHandler(async (_req: Request, res: Response) => {
   const data = await reportsService.dashboardStats();
   return successResponse(res, data, 'Dashboard stats retrieved');
 });
+ 

@@ -7,3 +7,4 @@ export default function DashboardCard({ title, value, subtitle, accent }) {
     </div>
   );
 }
+ 

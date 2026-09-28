@@ -46,3 +46,4 @@ export const generate = asyncHandler(async (req: Request, res: Response) => {
   const result = await invoiceService.generateMonthlyInvoices(req.body.billingMonth);
   return successResponse(res, result, 'Monthly invoices generated', 201);
 });
+ 

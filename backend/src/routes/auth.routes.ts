@@ -9,3 +9,4 @@ router.post('/login', loginValidators, handleValidation, authController.login);
 router.get('/me', authenticateJWT, authController.me);
 
 export default router;
+ 

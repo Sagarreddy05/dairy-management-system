@@ -70,3 +70,4 @@ export const deleteFarmer = async (id: string) => {
     data: { status: EntityStatus.INACTIVE },
   });
 };
+ 

@@ -47,3 +47,4 @@ export const generate = asyncHandler(async (req: Request, res: Response) => {
   const result = await deliveryService.generateDailyDeliveries(req.body.date);
   return successResponse(res, result, 'Daily deliveries generated', 201);
 });
+ 

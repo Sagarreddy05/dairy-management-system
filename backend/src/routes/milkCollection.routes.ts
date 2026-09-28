@@ -17,3 +17,4 @@ router.put('/:id', validate(milkCollectionSchema.partial()), ctrl.update);
 router.delete('/:id', ctrl.remove);
 
 export default router;
+ 

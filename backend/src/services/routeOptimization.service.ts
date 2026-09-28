@@ -16,3 +16,4 @@ export const optimizeRoute = (stops: RouteStop[]): RouteStop[] => {
   console.log(`[ROUTE OPTIMIZATION MOCK] Optimized ${optimized.length} stops`);
   return optimized;
 };
+ 

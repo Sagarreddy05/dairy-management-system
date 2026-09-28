@@ -38,3 +38,4 @@ export const cancel = asyncHandler(async (req: Request, res: Response) => {
   const challan = await challanService.cancelChallan(req.params.id);
   return successResponse(res, challan, 'Sales challan cancelled');
 });
+ 

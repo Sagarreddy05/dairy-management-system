@@ -16,3 +16,4 @@ router.put('/:id', farmerValidators, handleValidation, ctrl.update);
 router.delete('/:id', ctrl.remove);
 
 export default router;
+ 

@@ -30,3 +30,4 @@ export default function DataTable({ columns, rows, emptyMessage = 'No records fo
     </div>
   );
 }
+ 

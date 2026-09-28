@@ -36,3 +36,4 @@ export const remove = asyncHandler(async (req: Request, res: Response) => {
   const payment = await paymentService.deletePayment(req.params.id);
   return successResponse(res, payment, 'Payment deleted');
 });
+ 

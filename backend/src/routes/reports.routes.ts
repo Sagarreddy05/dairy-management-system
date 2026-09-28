@@ -16,3 +16,4 @@ router.get('/deliveries', ctrl.deliveries);
 router.get('/inventory', ctrl.inventory);
 
 export default router;
+ 

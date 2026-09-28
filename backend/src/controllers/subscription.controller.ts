@@ -38,3 +38,4 @@ export const remove = asyncHandler(async (req: Request, res: Response) => {
   const sub = await subscriptionService.deleteSubscription(req.params.id);
   return successResponse(res, sub, 'Subscription deactivated');
 });
+ 

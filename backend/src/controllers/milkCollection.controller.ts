@@ -38,3 +38,4 @@ export const remove = asyncHandler(async (req: Request, res: Response) => {
   const record = await milkService.deleteMilkCollection(req.params.id);
   return successResponse(res, record, 'Milk collection deleted');
 });
+ 

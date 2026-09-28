@@ -19,3 +19,4 @@ export const me = asyncHandler(async (req: Request, res: Response) => {
   const user = await authService.getMe(req.user!.id);
   return successResponse(res, user, 'User profile retrieved');
 });
+ 

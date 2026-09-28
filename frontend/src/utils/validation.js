@@ -53,3 +53,4 @@ export const validatePassword = (value) => {
 };
 
 export const hasErrors = (errors) => Object.values(errors).some(Boolean);
+ 

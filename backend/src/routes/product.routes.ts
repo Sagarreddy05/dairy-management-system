@@ -21,3 +21,4 @@ router.post('/:id/upload', requireImageUpload, ctrl.uploadImage);
 router.post('/:id/stock', validate(stockSchema), ctrl.adjustStock);
 
 export default router;
+ 

@@ -38,3 +38,4 @@ export const remove = asyncHandler(async (req: Request, res: Response) => {
   const farmer = await farmerService.deleteFarmer(req.params.id);
   return successResponse(res, farmer, 'Farmer deactivated');
 });
+ 

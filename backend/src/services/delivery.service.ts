@@ -177,3 +177,4 @@ export const generateDailyDeliveries = async (dateInput?: string) => {
 
   return { created: created.length, deliveries: created, optimizedRoute: route };
 };
+ 

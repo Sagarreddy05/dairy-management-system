@@ -106,3 +106,4 @@ export const getUploadedImageUrl = (file?: Express.Multer.File | Express.MulterS
   if (s3File.location) return s3File.location;
   return undefined;
 };
+ 

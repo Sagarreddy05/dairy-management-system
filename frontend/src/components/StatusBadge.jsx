@@ -13,3 +13,4 @@ export default function StatusBadge({ status }) {
   const cls = statusMap[status] || 'badge-muted';
   return <span className={`badge ${cls}`}>{status}</span>;
 }
+ 

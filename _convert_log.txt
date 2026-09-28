@@ -85,3 +85,4 @@ converted C:\Users\reddy\dairy-management-system\frontend\src\styles\global.css
 converted C:\Users\reddy\dairy-management-system\frontend\src\styles\table.css
 TOTAL_CONVERTED=85
 TOTAL_SCANNED=87
+ 

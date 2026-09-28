@@ -86,3 +86,4 @@ export const adjustStock = asyncHandler(async (req: Request, res: Response) => {
   );
   return successResponse(res, product, 'Stock adjusted');
 });
+ 
